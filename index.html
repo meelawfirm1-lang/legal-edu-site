@@ -2,20 +2,189 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>منصة قانونية تعليمية</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEELAWFIRM | منصة قانونية تعليمية</title>
+
+<style>
+/* ===== الأساسيات ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Cairo", Arial, sans-serif;
+  background: #f4f6f5;
+  color: #222;
+}
+
+/* ===== الشريط العلوي ===== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #ddd;
+}
+
+.header .icon {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ===== الشعار ===== */
+.logo {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0 10px;
+}
+
+.logo img {
+  width: 120px;
+  max-width: 40%;
+}
+
+/* ===== البحث ===== */
+.search-box {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 0 16px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+/* ===== النص التعريفي ===== */
+.intro {
+  text-align: center;
+  margin: 20px;
+  color: #2e7d32;
+  font-size: clamp(16px, 2.5vw, 22px);
+  font-weight: bold;
+}
+
+/* ===== القائمة ===== */
+.menu {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 16px;
+}
+
+.menu a {
+  background: #333;
+  color: #fff;
+  text-decoration: none;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: clamp(16px, 2vw, 18px);
+}
+
+.menu a.light {
+  background: #e0e0e0;
+  color: #000;
+  font-weight: bold;
+}
+
+/* ===== الفوتر ===== */
+.footer {
+  text-align: center;
+  margin: 40px 16px 20px;
+  font-size: 14px;
+  color: #2e7d32;
+}
+
+.footer a {
+  color: #2e7d32;
+  text-decoration: none;
+}
+
+/* ===== تابلت ===== */
+@media (min-width: 600px) {
+  .menu {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===== لابتوب ===== */
+@media (min-width: 992px) {
+  .menu {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .logo img {
+    width: 150px;
+  }
+}
+
+/* ===== شاشة كبيرة ===== */
+@media (min-width: 1200px) {
+  body {
+    background: #f1f3f2;
+  }
+
+  .menu {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+</style>
 </head>
+
 <body>
 
-<h1>المنصة القانونية التعليمية</h1>
+<!-- الشريط العلوي -->
+<div class="header">
+  <div class="icon">☰</div>
+  <div class="icon">🔍</div>
+</div>
 
-<p>
-موقع تعليمي لتبسيط القوانين السودانية
-بالشرح والاختبارات والتحميل.
-</p>
+<!-- الشعار -->
+<div class="logo">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Scales_of_justice.svg/512px-Scales_of_justice.svg.png" alt="شعار قانون">
+</div>
 
-<a href="laws-rent-1991.html">
-قانون إيجار المباني لسنة 1991
-</a>
+<!-- البحث -->
+<div class="search-box">
+  <input type="text" placeholder="عن ماذا تبحث ؟">
+</div>
+
+<!-- العنوان -->
+<div class="intro">
+  ميلوفرم منصة قانونية تعليمية توعوية إخبارية
+</div>
+
+<!-- القائمة -->
+<div class="menu">
+  <a href="#">مدونة ميلوفرم</a>
+  <a href="#">قوانين</a>
+  <a href="#">سوابق قضائية</a>
+  <a href="#">لوائح وقواعد وقرارات</a>
+  <a href="#">منشورات وضوابط وأوامر</a>
+  <a href="#">نماذج ومراسيم</a>
+  <a href="#">الإجراءات العملية ومرشد المحامي</a>
+  <a class="light" href="#">امتحان تنظيم مهنة القانون (المعادلة)</a>
+  <a href="#">الجريدة الرسمية</a>
+  <a href="#">أخبار قانونية</a>
+  <a href="#">فيديوهات توعوية</a>
+</div>
+
+<!-- الفوتر -->
+<div class="footer">
+  <p>
+    Legal Disclaimer / Privacy Policy / Terms Of Use / About Us / Contact Us
+  </p>
+  <p>Powered by MEELAWFIRM</p>
+  <p>V : 2.1.3</p>
+</div>
 
 </body>
 </html>
