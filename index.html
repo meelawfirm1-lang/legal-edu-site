@@ -1,190 +1,430 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MEELAWFIRM | منصة قانونية تعليمية</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>منصة MEELAWFIRM للعرائض القانونية</title>
+    <link href="https://fonts.googleapis.com/css2?family=El+Missiri:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-dark: #1a252f;
+            --accent-gold: #b89551;
+            --text-main: #333;
+            --bg-app: #f0f2f5;
+            --white: #ffffff;
+            --shadow-paper: 0 10px 30px rgba(0,0,0,0.2);
+        }
 
-<style>
-/* ===== الأساسيات ===== */
-* {
-  box-sizing: border-box;
-}
+        /* تنسيقات عامة متجاوبة */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            font-family: 'El Missiri', sans-serif;
+            background-color: var(--bg-app);
+            margin: 0;
+            padding: 0;
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
 
-body {
-  margin: 0;
-  font-family: "Cairo", Arial, sans-serif;
-  background: #f4f6f5;
-  color: #222;
-}
+        /* الهيدر والبحث */
+        header {
+            background: var(--primary-dark);
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-/* ===== الشريط العلوي ===== */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 20px;
-  background: #ffffff;
-  border-bottom: 1px solid #ddd;
-}
+        .search-container {
+            margin-top: 15px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
 
-.header .icon {
-  font-size: 22px;
-  cursor: pointer;
-}
+        #mainSearch {
+            width: 90%;
+            max-width: 600px;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: none;
+            font-family: 'El Missiri', sans-serif;
+            font-size: 16px;
+            outline: none;
+        }
 
-/* ===== الشعار ===== */
-.logo {
-  display: flex;
-  justify-content: center;
-  margin: 30px 0 10px;
-}
+        /* تصنيفات العرائض (أزرار تفاعلية) */
+        .categories-bar {
+            display: flex;
+            overflow-x: auto;
+            padding: 15px;
+            background: var(--white);
+            gap: 10px;
+            border-bottom: 1px solid #ddd;
+        }
 
-.logo img {
-  width: 120px;
-  max-width: 40%;
-}
+        .cat-btn {
+            white-space: nowrap;
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid var(--primary-dark);
+            background: transparent;
+            font-family: 'El Missiri', sans-serif;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-/* ===== البحث ===== */
-.search-box {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 0 16px;
-}
+        .cat-btn.active {
+            background: var(--primary-dark);
+            color: white;
+        }
 
-.search-box input {
-  width: 100%;
-  padding: 14px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-}
+        /* منطقة العمل الرئيسية */
+        .main-wrapper {
+            display: flex;
+            flex-direction: row;
+            height: calc(100vh - 160px);
+        }
 
-/* ===== النص التعريفي ===== */
-.intro {
-  text-align: center;
-  margin: 20px;
-  color: #2e7d32;
-  font-size: clamp(16px, 2.5vw, 22px);
-  font-weight: bold;
-}
+        /* قائمة النماذج */
+        .models-menu {
+            width: 300px;
+            background: #fff;
+            border-left: 1px solid #ddd;
+            overflow-y: auto;
+            padding: 10px;
+        }
 
-/* ===== القائمة ===== */
-.menu {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 0 16px;
-}
+        .model-item {
+            width: 100%;
+            text-align: right;
+            padding: 12px;
+            margin-bottom: 5px;
+            border: none;
+            background: #f9f9f9;
+            border-radius: 8px;
+            font-family: 'El Missiri', sans-serif;
+            cursor: pointer;
+            transition: 0.2s;
+        }
 
-.menu a {
-  background: #333;
-  color: #fff;
-  text-decoration: none;
-  padding: 16px;
-  border-radius: 8px;
-  text-align: center;
-  font-size: clamp(16px, 2vw, 18px);
-}
+        .model-item:hover { background: #eee; }
+        .model-item.active { border-right: 5px solid var(--accent-gold); background: #f0f7ff; }
 
-.menu a.light {
-  background: #e0e0e0;
-  color: #000;
-  font-weight: bold;
-}
+        /* منطقة الإدخال */
+        .input-section {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #fff;
+        }
 
-/* ===== الفوتر ===== */
-.footer {
-  text-align: center;
-  margin: 40px 16px 20px;
-  font-size: 14px;
-  color: #2e7d32;
-}
+        .form-card {
+            max-width: 500px;
+            margin: 0 auto;
+        }
 
-.footer a {
-  color: #2e7d32;
-  text-decoration: none;
-}
+        .field-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 15px;
+        }
 
-/* ===== تابلت ===== */
-@media (min-width: 600px) {
-  .menu {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+        input:focus { border-color: var(--accent-gold); outline: none; }
 
-/* ===== لابتوب ===== */
-@media (min-width: 992px) {
-  .menu {
-    grid-template-columns: repeat(3, 1fr);
-  }
+        /* معاينة الـ A4 الواقعية */
+        .preview-section {
+            flex: 1.2;
+            background: #525659;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            overflow-y: auto;
+        }
 
-  .logo img {
-    width: 150px;
-  }
-}
+        .a4-document {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            padding: 25mm 20mm;
+            box-shadow: var(--shadow-paper);
+            font-family: 'Simplified Arabic', 'serif'; /* خط العريضة التقليدي */
+            font-size: 18px;
+            line-height: 1.8;
+            color: #000;
+            position: relative;
+            transform-origin: top center;
+        }
 
-/* ===== شاشة كبيرة ===== */
-@media (min-width: 1200px) {
-  body {
-    background: #f1f3f2;
-  }
+        .a4-content { text-align: justify; direction: rtl; }
 
-  .menu {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-</style>
+        /* الموبايل: إخفاء الحواف وجعل الواجهة تفاعلية */
+        @media (max-width: 768px) {
+            .main-wrapper { flex-direction: column; height: auto; }
+            .models-menu { width: 100%; height: 200px; border-left: none; border-bottom: 1px solid #ddd; }
+            .preview-section { padding: 10px 0; background: var(--bg-app); }
+            .a4-document { 
+                width: 100%; 
+                margin: 0; 
+                padding: 15px; 
+                box-shadow: none; 
+                border-radius: 0;
+            }
+            .export-fab { bottom: 20px; left: 20px; width: 60px; height: 60px; border-radius: 50%; padding: 0; }
+        }
+
+        /* أزرار الإجراءات */
+        .export-fab {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 30px;
+            font-family: 'El Missiri', sans-serif;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 2000;
+        }
+
+        footer {
+            background: #fff;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .version-tag { color: #999; font-size: 12px; margin-top: 10px; }
+
+        @media print {
+            body * { visibility: hidden; }
+            .preview-section, .preview-section * { visibility: visible; }
+            .preview-section { position: absolute; left: 0; top: 0; width: 100%; padding: 0; margin: 0; background: white; }
+            .a4-document { box-shadow: none; margin: 0; width: 210mm; }
+            .export-fab { display: none; }
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- الشريط العلوي -->
-<div class="header">
-  <div class="icon">☰</div>
-  <div class="icon">🔍</div>
+<header>
+    <h2 style="margin:0;">بوابة العرائض القانونية الذكية</h2>
+    <div class="search-container">
+        <input type="text" id="mainSearch" placeholder="ابحث عن نموذج (إخلاء، قتل، مطالبة، شراكة...)" onkeyup="runSearch()">
+    </div>
+</header>
+
+<div class="categories-bar" id="catBar">
+    <button class="cat-btn active" onclick="filterCat('all')">الكل</button>
+    <button class="cat-btn" onclick="filterCat('مدني')">دعاوى مدنية</button>
+    <button class="cat-btn" onclick="filterCat('جنائي')">بلاغات جنائية</button>
+    <button class="cat-btn" onclick="filterCat('عمالي')">قضايا العمل</button>
 </div>
 
-<!-- الشعار -->
-<div class="logo">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Scales_of_justice.svg/512px-Scales_of_justice.svg.png" alt="شعار قانون">
+<div class="main-wrapper">
+    <div class="models-menu" id="sideMenu">
+        </div>
+
+    <div class="input-section">
+        <div class="form-card" id="formArea">
+            <div style="text-align: center; color: #999; margin-top: 50px;">
+                👈 اختر نموذج عريضة من القائمة الجانبية للبدء
+            </div>
+        </div>
+    </div>
+
+    <div class="preview-section">
+        <div class="a4-document" id="printableArea">
+            <div class="a4-content" id="documentContent">
+                <div style="text-align:center; color:#ccc; margin-top:200px;">
+                    ستظهر معاينة الورقة هنا تزامناً مع الكتابة
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- البحث -->
-<div class="search-box">
-  <input type="text" placeholder="عن ماذا تبحث ؟">
-</div>
+<button class="export-fab" onclick="window.print()">تصدير PDF 🖨️</button>
 
-<!-- العنوان -->
-<div class="intro">
-  ميلوفرم منصة قانونية تعليمية توعوية إخبارية
-</div>
+<footer>
+    <div class="links">
+        Legal Disclaimer | Privacy Policy | Terms Of Use | About Us | Contact Us
+    </div>
+    <div class="version-tag">
+        Powered by MEELAWFIRM | Version: 2.1.5
+    </div>
+</footer>
 
-<!-- القائمة -->
-<div class="menu">
-  <a href="#">مدونة ميلوفرم</a>
-  <a href="laws.html">قوانين</a>
-  <a href="#">سوابق قضائية</a>
-  <a href="#">لوائح وقواعد وقرارات</a>
-  <a href="#">منشورات وضوابط وأوامر</a>
-  <a href="#">نماذج ومراسيم</a>
-  <a href="#">الإجراءات العملية ومرشد المحامي</a>
-  <a class="light" href="#">امتحان تنظيم مهنة القانون (المعادلة)</a>
-  <a href="#">الجريدة الرسمية</a>
-  <a href="#">أخبار قانونية</a>
-  <a href="#">فيديوهات توعوية</a>
-</div>
+<script>
+    // قاعدة البيانات الكاملة للنماذج الـ 20
+    const allModels = [
+        { id:1, cat: "مدني", title: "إخلاء للإزعاج العام والمنافي للآداب", type: "nuisance" },
+        { id:2, cat: "مدني", title: "إخلاء للإجارة من الباطن", type: "sublease" },
+        { id:3, cat: "مدني", title: "إخلاء لإجراء تغييرات جوهرية", type: "modifications" },
+        { id:4, cat: "مدني", title: "إخلاء للمالك الجديد", type: "new_owner" },
+        { id:5, cat: "مدني", title: "إخلاء لانتهاء الإجارة الحكمية", type: "judgment_end" },
+        { id:6, cat: "مدني", title: "دعوى أجرة المثل", type: "fair_rent" },
+        { id:7, cat: "مدني", title: "دعوى فض شراكة", type: "partnership_end" },
+        { id:8, cat: "مدني", title: "دعوى إثبات حيازة", type: "land_possession" },
+        { id:9, cat: "مدني", title: "مطالبة مالية (بضاعة)", type: "debt_goods" },
+        { id:10, cat: "مدني", title: "مطالبة مالية (مديونية)", type: "debt_cash" },
+        { id:11, cat: "مدني", title: "إثبات بيع منزل", type: "sale_confirm" },
+        { id:12, cat: "مدني", title: "دعوى حق الارتفاق", type: "easement" },
+        { id:13, cat: "مدني", title: "إخلاء للحاجة الماسة", type: "urgent_need" },
+        { id:14, cat: "مدني", title: "إخلاء للفشل في السداد", type: "payment_failure" },
+        { id:15, cat: "جنائي", title: "بلاغ قتل عمد (م 130)", type: "murder" },
+        { id:16, cat: "جنائي", title: "بلاغ جراح عمد (م 139)", type: "injury" },
+        { id:17, cat: "جنائي", title: "بلاغ طفل (قانون 2010)", type: "child_case" },
+        { id:18, cat: "جنائي", title: "بلاغ مخدرات", type: "drugs" },
+        { id:19, cat: "جنائي", title: "التعدي الجنائي (م 183)", type: "trespass" },
+        { id:20, cat: "جنائي", title: "الإتلاف الجنائي (م 182)", type: "damage" },
+        { id:21, cat: "جنائي", title: "التملك الجنائي (م 180)", type: "criminal_possession" },
+        { id:22, cat: "عمالي", title: "دعوى عمالية متكاملة", type: "labor_claim" }
+    ];
 
-<!-- الفوتر -->
-<div class="footer">
-  <p>
-    Legal Disclaimer / Privacy Policy / Terms Of Use / About Us / Contact Us
-  </p>
-  <p>Powered by MEELAWFIRM</p>
-  <p>V : 2.1.3</p>
-</div>
+    let activeModel = null;
+
+    // تهيئة القائمة الجانبية
+    function renderMenu(items) {
+        const menu = document.getElementById('sideMenu');
+        menu.innerHTML = items.map(m => `
+            <button class="model-item" onclick="selectModel(${m.id})">
+                <small style="color:var(--accent-gold)">[${m.cat}]</small><br>
+                ${m.title}
+            </button>
+        `).join('');
+    }
+
+    function filterCat(c) {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        if(c === 'all') renderMenu(allModels);
+        else renderMenu(allModels.filter(m => m.cat === c));
+    }
+
+    function runSearch() {
+        const query = document.getElementById('mainSearch').value.toLowerCase();
+        const filtered = allModels.filter(m => m.title.toLowerCase().includes(query));
+        renderMenu(filtered);
+    }
+
+    // وظيفة اختيار النموذج وتوليد الحقول
+    function selectModel(id) {
+        activeModel = allModels.find(m => m.id === id);
+        const formArea = document.getElementById('formArea');
+        
+        // الحقول الأساسية المشتركة
+        let fieldsHTML = `<h3>${activeModel.title}</h3>`;
+        
+        // تمييز الجنائي عن المدني في العناوين
+        const labelBoss = activeModel.cat === 'جنائي' ? 'وكيل نيابة' : 'قاضي محكمة';
+        const labelParty1 = activeModel.cat === 'جنائي' ? 'اسم الشاكي' : 'اسم المدعي';
+        const labelParty2 = activeModel.cat === 'جنائي' ? 'اسم المشكو ضده' : 'اسم المدعى عليه';
+
+        fieldsHTML += `
+            <div class="field-group"><label>المحكمة / النيابة المختصة</label><input type="text" id="f_court" oninput="liveView()" placeholder="جزئية أو عامة..."></div>
+            <div class="field-group"><label>رقم العريضة (اختياري)</label><input type="text" id="f_case_no" oninput="liveView()"></div>
+            <div class="field-group"><label>${labelParty1}</label><input type="text" id="f_name1" oninput="liveView()"></div>
+            <div class="field-group"><label>هاتف ${labelParty1} (إجباري)</label><input type="tel" id="f_phone1" oninput="liveView()" required></div>
+            <div class="field-group"><label>العنوان</label><input type="text" id="f_addr1" oninput="liveView()"></div>
+            <hr>
+            <div class="field-group"><label>${labelParty2}</label><input type="text" id="f_name2" oninput="liveView()"></div>
+            <div class="field-group"><label>هاتف ${labelParty2} (إجباري)</label><input type="tel" id="f_phone2" oninput="liveView()" required></div>
+            <div class="field-group"><label>العنوان</label><input type="text" id="f_addr2" oninput="liveView()"></div>
+        `;
+
+        // إضافة حقول متخصصة بناء على النوع
+        if(activeModel.type === 'nuisance') {
+            fieldsHTML += `<div class="field-group"><label>وصف الأفعال المزعجة</label><textarea id="f_details" oninput="liveView()"></textarea></div>`;
+        } else if(activeModel.type === 'murder') {
+            fieldsHTML += `<div class="field-group"><label>أداة الجريمة</label><input type="text" id="f_weapon" oninput="liveView()" placeholder="مثلاً: سكين"></div>`;
+        } else if(activeModel.type === 'labor_claim') {
+            fieldsHTML += `
+                <div class="field-group"><label>تاريخ بدء العمل</label><input type="date" id="f_start" oninput="liveView()"></div>
+                <div class="field-group"><label>الراتب الشهري</label><input type="number" id="f_salary" oninput="liveView()"></div>
+            `;
+        } else if(activeModel.type === 'fair_rent') {
+            fieldsHTML += `<div class="field-group"><label>الأجرة الحالية</label><input type="number" id="f_old_rent" oninput="liveView()"></div>`;
+            fieldsHTML += `<div class="field-group"><label>الأجرة المطلوبة</label><input type="number" id="f_new_rent" oninput="liveView()"></div>`;
+        }
+
+        formArea.innerHTML = fieldsHTML;
+        liveView();
+    }
+
+    // وظيفة التحديث اللحظي للمعاينة الورقية
+    function liveView() {
+        if(!activeModel) return;
+
+        const val = (id) => document.getElementById(id) ? document.getElementById(id).value || "................" : "................";
+        
+        const court = val('f_court');
+        const caseNo = val('f_case_no');
+        const n1 = val('f_name1');
+        const p1 = val('f_phone1');
+        const a1 = val('f_addr1');
+        const n2 = val('f_name2');
+        const p2 = val('f_phone2');
+        const a2 = val('f_addr2');
+        
+        let dynamicPart = "";
+        
+        // منطق صياغة المحتوى بناء على القوالب الـ 20
+        if(activeModel.cat === "جنائي") {
+            dynamicPart = `
+                <p style="text-align:right">لدى نيابة: ${court}</p>
+                <p style="text-align:right">بلاغ رقم: ${caseNo}</p>
+                <p>فيما بين:</p>
+                <p><strong>الشاكي:</strong> ${n1} (${a1}) - هاتف: ${p1}</p>
+                <p style="text-align:center">ضـد</p>
+                <p><strong>المشكو ضده:</strong> ${n2} (${a2}) - هاتف: ${p2}</p>
+                <h3 style="text-align:center; text-decoration: underline;">الموضوع / ${activeModel.title}</h3>
+                <p>السيد / وكيل نيابة الموقر ،،</p>
+                <p>بكل التقدير والاحترام ونيابة عن الشاكي نلتمس فتح دعوى جنائية في مواجهة المشكو ضده وذلك للأسباب الآتية:</p>
+                <p>1- الوقائع: (تذكر التفاصيل هنا بناء على الحقول المخصصة)...</p>
+                <p>بناء عليه نلتمس إصدار أمر قبض وإحالة الأوراق للمحكمة.</p>
+            `;
+        } else {
+            dynamicPart = `
+                <p style="text-align:right">لدى محكمة: ${court} الجزئية</p>
+                <p style="text-align:right">ق م / ${caseNo}</p>
+                <p>فيما بين:</p>
+                <p><strong>المدعي:</strong> ${n1} (${a1}) - هاتف: ${p1}</p>
+                <p style="text-align:center">ضـد</p>
+                <p><strong>المدعى عليه:</strong> ${n2} (${a2}) - هاتف: ${p2}</p>
+                <h3 style="text-align:center; text-decoration: underline;">الموضوع / ${activeModel.title}</h3>
+                <p>السيد / قاضي محكمة الموقر ،،</p>
+                <p>بكل التقدير والاحترام ونيابة عن المدعي نلتمس تصريح دعوى مدنية في مواجهة المدعى عليه وذلك للأسباب الآتية:</p>
+                <p>1- المستأجر/المدعى عليه يشغل العقار (تذكر التفاصيل)...</p>
+                <p>بناء عليه نلتمس الحكم بالإخلاء والرسوم وأتعاب المحاماة.</p>
+            `;
+        }
+
+        const footerPart = `
+            <div style="margin-top:50px;">
+                <p>مقدم العريضة: ................................</p>
+                <p style="text-align:left">التوقيع: ....................</p>
+            </div>
+        `;
+
+        document.getElementById('documentContent').innerHTML = dynamicPart + footerPart;
+    }
+
+    // التشغيل الأولي
+    renderMenu(allModels);
+</script>
 
 </body>
 </html>
